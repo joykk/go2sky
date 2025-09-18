@@ -45,6 +45,7 @@ type Span interface {
 	SetPeer(string)
 	SetSpanLayer(agentv3.SpanLayer)
 	SetComponent(int32)
+	SetStartTime(t time.Time)
 	Tag(Tag, string)
 	Log(time.Time, ...string)
 	Error(time.Time, ...string)
@@ -88,6 +89,11 @@ func (ds *defaultSpan) GetOperationName() string {
 
 func (ds *defaultSpan) SetPeer(peer string) {
 	ds.Peer = peer
+}
+
+// SetStartTime 默认开始时间是now，允许修改开始时间，来支持特殊场景的上报
+func (ds *defaultSpan) SetStartTime(t time.Time) {
+	ds.StartTime = t
 }
 
 func (ds *defaultSpan) SetSpanLayer(layer agentv3.SpanLayer) {
