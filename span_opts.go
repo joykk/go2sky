@@ -16,7 +16,10 @@
 
 package go2sky
 
-import "github.com/SkyAPM/go2sky/propagation"
+import (
+	"github.com/SkyAPM/go2sky/propagation"
+	"time"
+)
 
 // WithContext setup trace sc from propagation
 func WithContext(sc *propagation.SpanContext) SpanOption {
@@ -39,5 +42,12 @@ func WithSpanType(spanType SpanType) SpanOption {
 func WithOperationName(operationName string) SpanOption {
 	return func(s *defaultSpan) {
 		s.OperationName = operationName
+	}
+}
+
+// WithStartTime 允许特殊设置StartTime
+func WithStartTime(t time.Time) SpanOption {
+	return func(s *defaultSpan) {
+		s.StartTime = t
 	}
 }
